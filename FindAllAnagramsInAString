@@ -1,0 +1,34 @@
+def findAllAnagramsinAString(s: str, p: str):
+    res = []
+    sHashMap, pHashMap = {}, {}
+    left, right = 0, 0
+
+    for char in p:
+        pHashMap[char] = 1 + pHashMap.get(char, 0)
+
+    while right < len(s):
+        sHashMap[s[right]] = 1 + sHashMap.get(s[right], 0)
+
+        if right - left + 1 == len(p):
+            if sHashMap == pHashMap:
+                res.append(left)
+
+            sHashMap[s[left]] -= 1
+
+            if sHashMap[s[left]] == 0:
+                sHashMap.pop(s[left])
+
+            left += 1
+        
+        right += 1
+
+    return res
+
+# 1st example input : s = "cbaebabacd", p = "abc"
+# 1st example output : [0,6]
+# 2nd example input : s = "abab", p = "ab"
+# 2nd example output : [0,1,2]
+if __name__ == "__main__":
+    word = input()
+    anagram = input()
+    print(findAllAnagramsinAString(word, anagram))
