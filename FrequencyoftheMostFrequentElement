@@ -1,0 +1,58 @@
+def frequencyoftheMostFrequentElement(nums, k):
+    left, right = 0, 0
+    currentSum = 0
+    maxLength = 0
+
+    nums.sort()
+
+    while (right <= len(nums) - 1):
+        currentSum += nums[right]
+
+        while (nums[right] * (right - left + 1) > currentSum + k):
+            currentSum -= nums[left]
+            left += 1
+        
+        maxLength = max(maxLength, right - left + 1)
+        right += 1
+    
+    return maxLength
+
+# my implementation (still WA, probably not covered edge cases)
+# def frequencyoftheMostFrequentElement(nums, k):
+#     nums.sort(reverse = True)
+
+#     left, right = 0, 1
+#     tempK = k
+#     mostFrequent = 1
+
+#     while (right <= len(nums) - 1):
+#         neededK = nums[left] - nums[right]
+#         tempK -= neededK
+
+#         while tempK < 0 & left <= right:
+#             # shift left index
+#             before = left
+#             left += 1
+#             after = left
+#             # print("before : " + str(before))
+#             # print("after : " + str(after))
+#             tempK += nums[before] - nums[after]
+
+#         mostFrequent = max(mostFrequent, right - left + 1)
+
+#         right += 1
+
+#     return mostFrequent
+
+# 3056
+# 9930 9923 9983 9997 9934 9952 9945 9914 9985 9982 9970 9932 9985 9902 9975 9990 9922 9990 9994 9937 9996 9964 9943 9963 9911 9925 9935 9945 9933 9916 9930 9938 10000 9916 9911 9959 9957 9907 9913 9916 9993 9930 9975 9924 9988 9923 9910 9925 9977 9981 9927 9930 9927 9925 9923 9904 9928 9928 9986 9903 9985 9954 9938 9911 9952 9974 9926 9920 9972 9983 9973 9917 9995 9973 9977 9947 9936 9975 9954 9932 9964 9972 9935 9946 9966
+# 7925
+# 9940 9995 9944 9937 9941 9952 9907 9952 9987 9964 9940 9914 9941 9933 9912 9934 9980 9907 9980 9944 9910 9997
+# 1st example input : s = "cbaebabacd", p = "abc"
+# 1st example output : [0,6]
+# 2nd example input : s = "abab", p = "ab"
+# 2nd example output : [0,1,2]
+if __name__ == "__main__":
+    k = int(input())
+    nums = [int(x) for x in input().split()]
+    print(frequencyoftheMostFrequentElement(nums, k))
