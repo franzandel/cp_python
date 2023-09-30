@@ -1,0 +1,51 @@
+def minimumNumberofFlipstoMaketheBinaryStringAlternating(s):
+    minOperation = float('inf')
+    tempMinOperation1, tempMinOperation2 = 0, 0
+
+    expected1, expected2 = "", ""
+    for i in range(len(s) * 2):
+        expected1 += "0" if i % 2 == 0 else "1"
+        expected2 += "1" if i % 2 == 0 else "0"
+
+        # below casting affects performance!
+        # if (i == 0):
+        #     expected1 += s[i]
+        #     expected2 += str(abs(int(s[i]) - 1))
+        # else:
+        #     expected1 += str(abs(int(expected1[i - 1]) - 1))
+        #     expected2 += str(abs(int(expected2[i - 1]) - 1))
+
+        if (i <= len(s) - 1):
+            if (s[i] != expected1[i]):
+                tempMinOperation1 += 1
+
+            if (s[i] != expected2[i]):
+                tempMinOperation2 += 1
+
+    minOperation = min(minOperation, tempMinOperation1, tempMinOperation2)
+
+    doubleGivenString = s + s
+
+    left, right = 0, len(s)
+    while right <= len(doubleGivenString) - 1:
+        if (doubleGivenString[right] != expected1[right]):
+            tempMinOperation1+=1
+
+        if (doubleGivenString[left] != expected1[left]):
+            tempMinOperation1-=1
+
+        if (doubleGivenString[right] != expected2[right]):
+            tempMinOperation2+=1
+
+        if (doubleGivenString[left] != expected2[left]):
+            tempMinOperation2-=1
+
+        minOperation = min(minOperation, tempMinOperation1, tempMinOperation2)
+        left+=1
+        right+=1
+
+    return minOperation
+
+if __name__ == "__main__":
+    s = input()
+    print(minimumNumberofFlipstoMaketheBinaryStringAlternating(s))
