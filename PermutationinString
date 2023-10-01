@@ -1,0 +1,46 @@
+def permutationInString(s1, s2) -> bool:
+    if len(s1) > len(s2):
+        return False
+    
+    hashMap1, hashMap2 = {}, {}
+    left, right = 0, 0
+
+    for i in range(len(s1)):
+        if s1[i] in hashMap1:
+            hashMap1[s1[i]] += 1
+        else:
+            hashMap1[s1[i]] = 1
+
+        if s2[i] in hashMap2:
+            hashMap2[s2[i]] += 1
+        else:
+            hashMap2[s2[i]] = 1
+
+        right += 1
+
+    if hashMap1 == hashMap2:
+        return True
+    
+    while (right < len(s2)):
+        hashMap2[s2[left]] -= 1
+        if hashMap2[s2[left]] == 0:
+            hashMap2.pop(s2[left])
+        left += 1
+
+        if s2[right] in hashMap2:
+            hashMap2[s2[right]] += 1
+        else:
+            hashMap2[s2[right]] = 1
+
+        right += 1
+
+        if hashMap1 == hashMap2:
+            return True
+        
+    return False
+    
+
+if __name__ == "__main__":
+    s1 = input()
+    s2 = input()
+    print(permutationInString(s1, s2))
