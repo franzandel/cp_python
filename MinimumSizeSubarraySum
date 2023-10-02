@@ -1,0 +1,27 @@
+def minimumSizeSubarraySum(target, nums):
+    left = 0
+    currentTarget = 0
+    minLength = float('inf')
+
+    for right in range(len(nums)):
+        currentTarget += nums[right]
+
+        while (currentTarget >= target):
+            minLength = min(minLength, right - left + 1)
+            currentTarget -= nums[left]
+            left += 1
+
+        right += 1
+
+    return minLength if minLength != float('inf') else 0
+
+# Input: target = 7, nums = [2,3,1,2,4,3]
+# Output: 2
+# Input: target = 4, nums = [1,4,4]
+# Output: 1
+# Input: target = 11, nums = [1,1,1,1,1,1,1,1]
+# Output: 0
+if __name__ == "__main__":
+    target = int(input())
+    nums = [int(x) for x in input().split()]
+    print(minimumSizeSubarraySum(target, nums))
