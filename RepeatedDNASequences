@@ -1,0 +1,26 @@
+def repeatedDNASequences(s) -> list:
+    hashMap = {}
+    hashSet = set()
+    left, right = 0, 9
+
+    while (right < len(s)):
+        substring = s[left:right+1]
+        if substring in hashMap:
+            hashMap[substring] += 1
+            if hashMap[substring] > 1:
+                hashSet.add(substring)
+        else:
+            hashMap[substring] = 1
+
+        left += 1
+        right += 1
+
+    return hashSet
+
+# Input: s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+# Output: ["AAAAACCCCC","CCCCCAAAAA"]
+# Input: s = "AAAAAAAAAAAAA"
+# Output: ["AAAAAAAAAA"]
+if __name__ == "__main__":
+    s = input()
+    print(repeatedDNASequences(s))
