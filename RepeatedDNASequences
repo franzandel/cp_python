@@ -1,21 +1,39 @@
+# Neetcode solution
 def repeatedDNASequences(s) -> list:
-    hashMap = {}
-    hashSet = set()
+    seen, result = set(), set()
     left, right = 0, 9
 
     while (right < len(s)):
         substring = s[left:right+1]
-        if substring in hashMap:
-            hashMap[substring] += 1
-            if hashMap[substring] > 1:
-                hashSet.add(substring)
-        else:
-            hashMap[substring] = 1
+        if substring in seen:
+            result.add(substring)
+
+        seen.add(substring)
 
         left += 1
         right += 1
 
-    return hashSet
+    return list(result)
+
+# My solution
+# def repeatedDNASequences(s) -> list:
+#     hashMap = {}
+#     hashSet = set()
+#     left, right = 0, 9
+
+#     while (right < len(s)):
+#         substring = s[left:right+1]
+#         if substring in hashMap:
+#             hashMap[substring] += 1
+#             if hashMap[substring] > 1:
+#                 hashSet.add(substring)
+#         else:
+#             hashMap[substring] = 1
+
+#         left += 1
+#         right += 1
+
+#     return hashSet
 
 # Input: s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
 # Output: ["AAAAACCCCC","CCCCCAAAAA"]
