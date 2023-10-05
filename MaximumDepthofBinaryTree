@@ -1,0 +1,22 @@
+# My Random Solution
+def maxDepth(self, root):
+    """
+    :type root: TreeNode
+    :rtype: int
+    """
+    if root is None: return 0
+    depth = 1
+    leftCount = self.depthCount(root.left, depth)
+    rightCount = self.depthCount(root.right, depth)
+    return max(leftCount, rightCount)
+
+def depthCount(self, root, depth):
+    if (root is None): return 1
+    depthA = self.depthCount(root.left, depth) + 1
+    depthB = self.depthCount(root.right, depth) + 1
+    return max(depthA, depthB)
+
+# Neetcode recursion solution
+def maxDepth(self, root):
+    if not root: return 0
+    return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
