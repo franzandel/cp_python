@@ -1,9 +1,5 @@
 # My Random Solution
 def maxDepth(self, root):
-    """
-    :type root: TreeNode
-    :rtype: int
-    """
     if root is None: return 0
     depth = 1
     leftCount = self.depthCount(root.left, depth)
@@ -23,24 +19,24 @@ def maxDepth(self, root):
 
 # Neetcode iterative BFS solution
 def maxDepth(self, root):
-        if not root: return 0
+    if not root: return 0
 
-        level = 0
-        queue = deque([root])
+    level = 0
+    queue = deque([root])
 
-        while queue:
-            for i in range(len(queue)):
-                node = queue.popleft()
+    while queue:
+        for i in range(len(queue)):
+            node = queue.popleft()
 
-                if node.left:
-                    queue.append(node.left)
+            if node.left:
+                queue.append(node.left)
 
-                if node.right:
-                    queue.append(node.right)
+            if node.right:
+                queue.append(node.right)
 
-            level += 1
+        level += 1
 
-        return level
+    return level
 
 # Neetcode iterative DFS solution
 def maxDepth(self, root):
