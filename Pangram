@@ -1,0 +1,8 @@
+def checkIfPangram(self, sentence):
+    # TODO: Write your code here
+    dictionary = set()
+    for alphabet in sentence:
+      if alphabet.isalpha():
+        dictionary.add(alphabet.lower())
+
+    return len(dictionary) == 26
