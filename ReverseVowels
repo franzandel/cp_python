@@ -1,0 +1,36 @@
+def reverseVowels(s: str) -> str:
+    # TODO: Write your code here
+    if s == "": return s
+
+    sList = list(s)
+    vowels = "aeiouAEIOU" #designgurus solution
+
+    left, right = 0, len(s) - 1
+    isLeftVowel, isRightVowel = False, False
+
+    while left <= right:
+      # My solution
+      # isLeftVowel = isVowel(sList[left])
+      # isRightVowel = isVowel(sList[right])
+      isLeftVowel = vowels.find(sList[left]) != -1
+      isRightVowel = vowels.find(sList[right]) != -1
+
+      if isLeftVowel and isRightVowel:
+        temp = sList[left]
+        sList[left] = sList[right]
+        sList[right] = temp
+        isLeftVowel = False
+        isRightVowel = False
+      
+      if not isLeftVowel: left+=1
+      if not isRightVowel: right-=1
+
+    return ''.join(sList)
+  
+def isVowel(char):
+  lowerChar = char.lower()
+  return lowerChar == 'a' or lowerChar == 'e' or lowerChar == 'i' or lowerChar == 'o' or lowerChar == 'u'
+
+if __name__ == "__main__":
+    word = input()
+    print(reverseVowels(word))
