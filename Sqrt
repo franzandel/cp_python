@@ -1,25 +1,23 @@
-from math import floor
-
-def sqrt(result):
-    if result < 2: return result
+def mySqrt(self, x: int) -> int:
+    # TODO: Write your code here
+    if x < 2: return x
 
     left = 2
-    right = result / 2
+    right = x // 2
 
     while (left <= right):
-        mid = floor((left + right) / 2)
-        guess = mid * mid
+      mid = (left + right) // 2
+      guess = mid * mid
+      if guess > x:
+        right = mid - 1
+      elif guess < x:
+        left = mid + 1
+      else:
+        return mid
 
-        if guess > result:
-            right -= 1
-        elif guess < result:
-            left += 1
-        else:
-            return mid
-    
     return right
 
 
 if __name__ == "__main__":
     result = int(input())
-    print(sqrt(result))
+    print(mySqrt(result))
