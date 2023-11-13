@@ -1,0 +1,16 @@
+def isPalindrome(self, s: str) -> bool:
+    # TODO: Write your code here
+    # insert into new string with removed non-alphanumeric
+    alphaOnly = ""
+    for i in s:
+        # if i.isalpha() or i.isdigit(): # My solution
+        if i.isalnum(): # Designgurus
+            alphaOnly += i.lower()
+
+    # two pointers loop from front and back to compare if alphabet is the same
+    for i in range(len(alphaOnly)):
+        lastPointer = len(alphaOnly) - i - 1
+        if alphaOnly[i] != alphaOnly[lastPointer]:
+            return False
+
+    return True
