@@ -1,0 +1,31 @@
+# My solution
+def isAnagram(self, s, t):
+    # TODO: Write your code here
+    if len(s) != len(t): return False
+    # sort s & t
+    sortedS = ''.join(sorted(s))
+    sortedT = ''.join(sorted(t))
+    # compare each alphabet, if find difference then return False otherwise True
+    for i in range(len(sortedS)):
+        if sortedS[i] != sortedT[i]:
+            return False
+
+    return True
+
+# Designgurus solution
+def isAnagram(self, s, t):
+    # TODO: Write your code here
+    if len(s) != len(t): return False
+    # use hashmap
+    frequencies = {}
+    # insert s alphabet inside counter + 1
+    # insert t alphabet inside counter - 1
+    for i in range(len(s)):
+      frequencies[s[i]] = frequencies.get(s[i], 0) + 1
+      frequencies[t[i]] = frequencies.get(t[i], 0) - 1
+    # loop all values in hashmap, if it contains other than 0 return False, otherwise True
+    for value in frequencies.values():
+      if value != 0:
+        return False
+
+    return True
