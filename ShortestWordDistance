@@ -1,0 +1,18 @@
+def shortestDistance(self, words, word1, word2):
+    # TODO: Write your code here
+    # My Solution
+    # minDistance = float('inf')
+    # Designgurus Solution
+    minDistance = len(words)
+    firstIndex = -1
+    secondIndex = -1
+
+    for index, value in enumerate(words):
+      if value == word1:
+        firstIndex = index
+      elif value == word2:
+        secondIndex = index
+      
+      if firstIndex != -1 and secondIndex != -1:
+        minDistance = min(minDistance, abs(secondIndex - firstIndex))
+    return minDistance
