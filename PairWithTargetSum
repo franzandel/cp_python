@@ -1,0 +1,21 @@
+def search(self, arr, target_sum):
+    # TODO: Write your code here
+    # init left pointer at 0 index, right pointer at last index
+    # while left <= right
+    # sum left and right character
+    # if it is greater, decrement right pointer
+    # otherwise, increment left pointer
+
+    left, right = 0, len(arr) - 1
+
+    while (left < right):
+      currentSum = arr[left] + arr[right]
+
+      if currentSum > target_sum:
+        right -= 1
+      elif currentSum < target_sum:
+        left += 1
+      else:
+        return [left, right]
+
+    return [-1, -1]
