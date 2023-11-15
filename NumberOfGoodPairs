@@ -1,4 +1,6 @@
-  # O(n) square solution (Mine)
+# Pay attention to question pattern, try to simulate several test cases to find pattern
+
+ # O(n) square solution (Mine)
   # def numGoodPairs(self, nums):
   #   pairCount = 0
   #   # TODO: Write your code here
@@ -12,10 +14,35 @@
   #   return pairCount
   
 # Designgurus Solution
+# def numGoodPairs(self, nums):
+#     pairCount = 0
+#     hashmap = {}
+#     for i in nums:
+#       hashmap[i] = hashmap.get(i, 0) + 1
+#       pairCount += hashmap[i] - 1
+#     return pairCount
+
+# Neetcode Solution 1
 def numGoodPairs(self, nums):
-    pairCount = 0
-    hashmap = {}
-    for i in nums:
-      hashmap[i] = hashmap.get(i, 0) + 1
-      pairCount += hashmap[i] - 1
-    return pairCount
+  res = 0
+  hashmap = {}
+  for i in nums:
+    hashmap[i] = hashmap.get(i, 0) + 1
+    
+  for i in hashmap.values():
+      res += i * (i - 1) // 2
+  
+  return res
+
+  # Neetcode Solution 2
+def numGoodPairs(self, nums):
+  res = 0
+  hashmap = {}
+  for i in nums:
+    if i in hashmap:
+      res += hashmap[i]
+      hashmap[i] += 1
+    else:
+      hashmap[i] = 1
+  return res
+    
