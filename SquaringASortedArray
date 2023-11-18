@@ -1,0 +1,25 @@
+def makeSquares(self, arr):
+    n = len(arr)
+    squares = [0 for x in range(n)]
+    # TODO: Write your code here
+    # first pointer on left most, second pointer on last most
+    # compare both result, which is greater
+    # greater one will be put on last new array
+    # greater one index will be incremented or decremented based on left or right
+
+    left, right = 0, len(arr) - 1
+    currentPosition = len(arr) - 1
+    while (left <= right):
+      firstResult = arr[left] * arr[left]
+      secondResult = arr[right] * arr[right]
+
+      if firstResult > secondResult:
+        squares[currentPosition] = firstResult
+        left += 1
+      else:
+        squares[currentPosition] = secondResult
+        right -= 1
+
+      currentPosition -= 1
+
+    return squares
