@@ -1,0 +1,29 @@
+# Designgurus Solution
+def searchTriplets(self, arr):
+    triplets = []
+    # TODO: Write your code here
+
+    arr.sort()
+
+    for i in range(len(arr)):
+      if i > 0 and arr[i] == arr[i - 1]: continue
+      self.binarySearch(arr, -arr[i], i + 1, triplets)
+
+    return triplets
+  
+def binarySearch(self, arr, target, left, triplets):
+    right = len(arr) - 1
+
+    while left < right:
+      if arr[left] + arr[right] == target:
+        triplets.append([-target, arr[left], arr[right]])
+        left += 1
+        right -= 1
+        while left < right and arr[left] == arr[left - 1]:
+          left += 1
+        while left < right and arr[right] == arr[right + 1]:
+          right -= 1
+      elif arr[left] + arr[right] > target:
+        right -= 1
+      else:
+        left += 1
