@@ -1,3 +1,5 @@
+# Time Complexity : O(n3)
+# Space Complexity : O(n3)
 def findSubarrays(arr, target):
     result = []
     # TODO: Write your code here
@@ -13,9 +15,9 @@ def findSubarrays(arr, target):
             left += 1
 
         tempList = []
-        for i in range(right, left - 1, -1):
+        for i in range(right, left - 1, -1): # Reason why it loop backwards, is to get latest number first otherwise will cause duplicate
             tempList.append(arr[i])
-            result.append(list(tempList))
+            result.append(list(tempList)) # Reason why it is converted to list, because to prevent same memory pointing
 
     return result
 
