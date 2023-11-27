@@ -1,0 +1,30 @@
+def findSubarrays(arr, target):
+    result = []
+    # TODO: Write your code here
+
+    left, right = 0, 0
+    latestCount = 1
+
+    for right in range(len(arr)):
+        latestCount *= arr[right]
+
+        while latestCount >= target and left < len(arr):
+            latestCount /= arr[left]
+            left += 1
+
+        tempList = []
+        for i in range(right, left - 1, -1):
+            tempList.append(arr[i])
+            result.append(list(tempList))
+
+    return result
+
+# Input
+# [1, 2, 3, 4, 5]
+# target = 10
+# Expected : [[1],[2],[1,2],[3],[2,3],[1,2,3],[4],[5]]
+if __name__ == "__main__":
+    target = int(input())
+    arrayLength = int(input())
+    array = [int(x) for x in input().split()]
+    print(findSubarrays(array, target))
