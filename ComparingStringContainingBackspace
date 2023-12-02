@@ -1,0 +1,80 @@
+# My Solution Correct (but not using Two Pointers technique)
+# def compare(str1, str2):
+#     # TODO: Write your code here
+#     sanitize1 = []
+#     sanitize2 = []
+
+#     isBackSpace1 = []
+#     for i in range(len(str1) - 1, -1, -1):
+#       if str1[i] == "#":
+#         isBackSpace1.append(True)
+#       else:
+#         if isBackSpace1:
+#            isBackSpace1.remove(True)
+#            continue
+#         sanitize1.insert(0, str1[i])
+
+#     for i in range(len(isBackSpace1)):
+#        sanitize1.insert(0, "#")
+
+#     print(sanitize1)
+
+#     isBackSpace2 = []
+#     for i in range(len(str2) - 1, -1, -1):
+#       if str2[i] == "#":
+#         isBackSpace2.append(True)
+#       else:
+#         if isBackSpace2:
+#            isBackSpace2.remove(True)
+#            continue
+#         sanitize2.insert(0, str2[i])
+    
+#     for i in range(len(isBackSpace2)):
+#        sanitize2.insert(0, "#")
+
+#     print(sanitize2)
+
+#     return ''.join(sanitize1) == ''.join(sanitize2)
+
+# Designgurus Solution
+# Time Complexity : O(m + n) which represents each string
+# Space Complexity : O(1)
+# Input: str1="xp#", str2="xyz##"
+# Output: true
+def compare(str1, str2):
+    str1Index, str2Index = len(str1) - 1, len(str2) - 1
+
+    while str1Index != -1 and str2Index != -1:
+        firstIndex = getNextValidCharacter(str1, str1Index)
+        secondIndex = getNextValidCharacter(str2, str2Index)
+
+        if firstIndex < 0 and secondIndex < 0:
+            return True
+        if firstIndex < 0 or secondIndex < 0:
+            return False
+        if str1[firstIndex] != str2[secondIndex]:
+            return False
+        
+        str1Index = firstIndex - 1
+        str2Index = secondIndex - 1
+
+    return True
+
+def getNextValidCharacter(str, index):
+    backspaceCount = 0
+    while index >= 0:
+        if str[index] == "#":
+            backspaceCount += 1
+        elif backspaceCount > 0:
+            backspaceCount -= 1
+        else:
+            break
+
+        index -= 1
+
+    return index
+
+if __name__ == "__main__":
+    str1 = input()
+    str2 = input()
+    print(compare(str1, str2))
