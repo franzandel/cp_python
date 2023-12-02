@@ -1,0 +1,28 @@
+# My Solution
+# Time Complexity = O(n)
+# Space Complexity = O(n)
+# def hasCycle(self, head):
+#     # TODO: Write your code here
+#     list = []
+#     return self.deepDive(head, list)
+  
+# def deepDive(self, head, list):
+#     if not head: return False
+#     if head not in list:
+#       list.append(head)
+#     else:
+#       return True
+#     return self.deepDive(head.next, list)
+
+# Designgurus Solution
+# Time Complexity = O(n)
+# Space Complexity = O(1)
+def hasCycle(self, head):
+    # TODO: Write your code here
+    slow, fast = head, head
+    while fast is not None and fast.next is not None:
+      fast = fast.next.next
+      slow = slow.next
+      if slow == fast:
+        return True
+    return False
