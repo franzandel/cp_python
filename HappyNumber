@@ -1,0 +1,24 @@
+# My Solution
+# Time Complexity : O(k)
+# Space Complexity : O(k)
+def find(num):
+    # TODO: Write your code here
+    results = []
+
+    while True:
+      digits = [int(d) for d in str(num)]
+      result = 0
+      for i in digits:
+        result += i ** 2
+
+      if result == 1:
+        return True
+      elif result in results:
+        return False
+
+      results.append(result)
+      num = result
+
+if __name__ == "__main__":
+    num = input()
+    print(find(num))
