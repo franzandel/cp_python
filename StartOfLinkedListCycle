@@ -1,0 +1,61 @@
+# Designgurus Solution (Written by me)
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+# def findCycleStart(self, head):
+#     #TODO Write your code here
+#     slow, fast = head, head
+
+#     while fast is not None and fast.next is not None:
+#       fast = fast.next.next
+#       slow = slow.next
+
+#       if fast == slow:
+#         length = self.calculateLength(slow)
+#         pointer1, pointer2 = head, head
+#         for i in range(length):
+#           pointer2 = pointer2.next
+        
+#         while pointer1 != pointer2:
+#           pointer1 = pointer1.next
+#           pointer2 = pointer2.next
+        
+#         return pointer1
+    
+#     return head
+
+# Designgurus Solution (Not mine)
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+def findCycleStart(self, head):
+    #TODO Write your code here
+    length = 0
+    slow, fast = head, head
+
+    while fast is not None and fast.next is not None:
+      fast = fast.next.next
+      slow = slow.next
+
+      if fast == slow:
+        length = self.calculateLength(slow)
+        break
+    
+    pointer1, pointer2 = head, head
+    for i in range(length):
+        pointer2 = pointer2.next
+    
+    while pointer1 != pointer2:
+        pointer1 = pointer1.next
+        pointer2 = pointer2.next
+    
+    return pointer1
+
+def calculateLength(self, slow):
+    current = slow
+    length = 0
+    while True:
+      length += 1
+      current = current.next
+      if current == slow:
+        break
+    
+    return length
