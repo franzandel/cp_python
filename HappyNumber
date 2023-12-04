@@ -1,24 +1,68 @@
+# Designgurus Solution
+# Time Complexity : O(logn)
+# Space Complexity : O(1)
+def find(num):
+    slow, fast = num, num
+    while True:
+      slow = find_square_sum(slow)  # move one step
+      fast = find_square_sum(find_square_sum(fast))  # move two steps
+      if slow == fast:  # found the cycle
+        break
+    return slow == 1  # see if the cycle is stuck on the number '1'
+
+
+def find_square_sum(num):
+    _sum = 0
+    while (num > 0):
+      digit = num % 10
+      _sum += digit * digit
+      num //= 10
+    return _sum
+
+# Designgurus Solution (Written by me)
+# def find(num):
+#   slow, fast = num, num
+
+#   while True:
+#     tempSlow = 0
+#     for i in str(slow):
+#         tempSlow += int(i) ** 2
+
+#     slow = tempSlow
+
+#     for i in range(2):
+#       tempFast = 0
+#       for i in str(fast):
+#           tempFast += int(i) ** 2
+
+#       fast = tempFast
+
+#     if fast == 1:
+#        return True
+#     elif slow == fast:
+#        return False
+
 # My Solution
 # Time Complexity : O(k)
 # Space Complexity : O(k)
-def find(num):
-    # TODO: Write your code here
-    results = []
+# def find(num):
+#     # TODO: Write your code here
+#     results = []
 
-    while True:
-      digits = [int(d) for d in str(num)]
-      result = 0
-      for i in digits:
-        result += i ** 2
+#     while True:
+#       digits = [int(d) for d in str(num)]
+#       result = 0
+#       for i in digits:
+#         result += i ** 2
 
-      if result == 1:
-        return True
-      elif result in results:
-        return False
+#       if result == 1:
+#         return True
+#       elif result in results:
+#         return False
 
-      results.append(result)
-      num = result
+#       results.append(result)
+#       num = result
 
 if __name__ == "__main__":
-    num = input()
+    num = int(input())
     print(find(num))
