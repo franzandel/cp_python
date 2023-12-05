@@ -1,0 +1,92 @@
+class LinkedList:
+  def __init__(self, value, next=None):
+    self.val = value
+    self.next = next
+
+  def print_list(self):
+    temp = self
+    while temp is not None:
+      print(temp.val, end='')
+      temp = temp.next
+    print()
+
+# Designgurus Solution (Written by me)
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+# def isPalindrome(head):
+#     # TODO: Write your code here
+#     slow, fast = head, head
+#     while fast is not None and fast.next is not None:
+#       slow = slow.next
+#       fast = fast.next.next
+    
+#     middle = slow
+
+#     # reverse middle
+#     # Suprisingly this is changing original node
+#     prev = None
+#     while middle is not None:
+#       next = middle.next
+#       middle.next = prev
+#       prev = middle
+#       middle = next
+
+#     # compare with given node
+#     node1 = head
+#     while prev is not None:
+#       if node1.val != prev.val:
+#         return False
+      
+#       node1 = node1.next
+#       prev = prev.next
+
+#     return True
+
+# Designgurus Solution
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+def isPalindrome(head):
+    if head is None or head.next is None:
+      return True
+
+    # find middle of the LinkedList
+    slow, fast = head, head
+    while (fast is not None and fast.next is not None):
+      slow = slow.next
+      fast = fast.next.next
+
+    head_second_half = reverse(slow)  # reverse the second half
+    # store the head of reversed part to revert back later
+    copy_head_second_half = head_second_half
+
+    # compare the first and the second half
+    while (head is not None and head_second_half is not None):
+      if head.val != head_second_half.val:
+        break  # not a palindrome
+
+      head = head.next
+      head_second_half = head_second_half.next
+
+    reverse(copy_head_second_half)  # revert the reverse of the second half
+
+    if head is None or head_second_half is None:  # if both halves match
+      return True
+
+    return False
+
+
+def reverse(head):
+    prev = None
+    while (head is not None):
+      next = head.next
+      head.next = prev
+      prev = head
+      head = next
+    return prev
+
+if __name__ == "__main__":
+    head = LinkedList(1)
+    head.next = LinkedList(2)
+    head.next.next = LinkedList(2)
+    head.next.next.next = LinkedList(1)
+    print(isPalindrome(head))
