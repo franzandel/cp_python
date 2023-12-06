@@ -1,0 +1,60 @@
+# Designgurus Solution
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+def reorder(head):
+    slow, fast = head, head
+    while fast is not None and fast.next is not None:
+        slow = slow.next
+        fast = fast.next.next
+
+    middle = slow
+
+    head_second_half = None
+    while middle is not None:
+        next = middle.next
+        middle.next = head_second_half
+        head_second_half = middle
+        middle = next
+
+    head_first_half = head
+    while head_first_half is not None and head_second_half is not None:
+      temp = head_first_half.next
+      head_first_half.next = head_second_half
+      head_first_half = temp
+
+      temp = head_second_half.next
+      head_second_half.next = head_first_half
+      head_second_half = temp
+
+    if head_first_half is not None:
+      head_first_half.next = None
+    
+    return head
+
+    
+class LinkedList:
+  def __init__(self, value, next=None):
+    self.val = value
+    self.next = next
+
+  def print_list(self):
+    temp = self
+    while temp is not None:
+      print(temp.val, end='')
+      temp = temp.next
+    print()
+
+if __name__ == "__main__":
+    head = LinkedList(2)
+    head.next = LinkedList(4)
+    head.next.next = LinkedList(6)
+    head.next.next.next = LinkedList(8)
+    head.next.next.next.next = LinkedList(10)
+
+    # head = LinkedList(2)
+    # head.next = LinkedList(4)
+    # head.next.next = LinkedList(6)
+    # head.next.next.next = LinkedList(8)
+    # head.next.next.next.next = LinkedList(10)
+    # head.next.next.next.next.next = LinkedList(12)
+    print(reorder(head))
