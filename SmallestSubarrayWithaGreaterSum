@@ -1,0 +1,26 @@
+# My Solution
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+def findMinSubArray(s, arr):
+    # TODO: Write your code here
+    left, right = 0, 0
+    minLength, currentSum = float('inf'), 0
+
+    while right < len(arr):
+        if currentSum < s:
+            currentSum += arr[right]
+    
+        while currentSum >= s:
+            minLength = min(minLength, right - left + 1)
+            currentSum -= arr[left]
+            left += 1
+
+        right += 1
+
+    return minLength if minLength != float('inf') else 0
+
+if __name__ == "__main__":
+    s = int(input())
+    arrayLength = int(input())
+    array = [int(x) for x in input().split()]
+    print(findMinSubArray(s, array))
