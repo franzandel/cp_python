@@ -1,0 +1,136 @@
+# Designgurus Solution
+# def loopExists(arr):
+#     for i in range(len(arr)):
+#       is_forward = arr[i] >= 0  # if we are moving forward or not
+#       slow, fast = i, i
+
+#       # if slow or fast becomes '-1' this means we can't find cycle for this number
+#       while True:
+#         # move one step for slow pointer
+#         slow = find_next_index(arr, is_forward, slow)
+#         # move one step for fast pointer
+#         fast = find_next_index(arr, is_forward, fast)
+#         if (fast != -1):
+#           # move another step for fast pointer
+#           fast = find_next_index(arr, is_forward, fast)
+#         if slow == -1 or fast == -1 or slow == fast:
+#           break
+
+#       if slow != -1 and slow == fast:
+#         return True
+
+#     return False
+
+
+# def find_next_index(arr, is_forward, current_index):
+#     direction = arr[current_index] >= 0
+
+#     if is_forward != direction:
+#       return -1  # change in direction, return -1
+
+#     next_index = (current_index + arr[current_index]) % len(arr)
+
+#     # one element cycle, return -1
+#     if next_index == current_index:
+#       next_index = -1
+
+#     return next_index
+
+# My Solution (After learning from Designgurus Solution)
+# Time Complexity : O(n2)
+# Space Complexity : O(1)
+# def loopExists(arr):
+#     for i in range(len(arr)):
+#       slow, fast = i, i
+#       isPositive = True if arr[i] >= 0 else False
+
+#       while True:
+#         slow = findNextIndex(arr, slow, isPositive)
+#         fast = findNextIndex(arr, fast, isPositive)
+#         if fast != -1:
+#           fast = findNextIndex(arr, fast, isPositive)
+
+#         if slow == -1 or fast == -1 or fast == slow:
+#           break
+
+#       if fast == -1:
+#         continue
+#       if fast == slow:
+#         return True
+    
+#     return False
+
+# def findNextIndex(arr, index, isPositive):
+#     nextIndex = (index + arr[index]) % len(arr)
+
+#     if index == nextIndex:
+#       return -1
+#     if arr[nextIndex] < 0 and isPositive:
+#       return -1
+#     if arr[nextIndex] >= 0 and not isPositive:
+#       return -1
+    
+#     return nextIndex
+
+# Optimized Solution (Mine)
+# Time Complexity : O(n)
+# Space Complexity : O(n)
+def loopExists(arr):
+    hashMap = {}
+    for i in range(len(arr)):
+      if hashMap.get(i, -2) != -2: continue
+      slow, fast = i, i
+      isPositive = True if arr[i] >= 0 else False
+
+      while True:
+        storedSlow = hashMap.get(slow, -2)
+        if storedSlow != -2:
+          slow = storedSlow
+        else:
+          previousSlow = slow
+          slow = findNextIndex(arr, slow, isPositive)
+          hashMap[previousSlow] = slow
+
+        storedFast = hashMap.get(fast, -2)
+        if storedFast != -2:
+          fast = storedFast
+        else:
+          previousFast = fast
+          fast = findNextIndex(arr, fast, isPositive)
+          hashMap[previousFast] = fast
+
+        if fast != -1:
+          storedFast = hashMap.get(fast, -2)
+          if storedFast != -2:
+            fast = storedFast
+          else:
+            previousFast = fast
+            fast = findNextIndex(arr, fast, isPositive)
+            hashMap[previousFast] = fast
+
+        if slow == -1 or fast == -1 or fast == slow:
+          break
+
+      if fast == -1:
+        continue
+      if fast == slow:
+        return True
+    
+    return False
+
+def findNextIndex(arr, index, isPositive):
+    nextIndex = (index + arr[index]) % len(arr)
+
+    if index == nextIndex:
+      return -1
+    if arr[nextIndex] < 0 and isPositive:
+      return -1
+    if arr[nextIndex] >= 0 and not isPositive:
+      return -1
+    
+    return nextIndex
+    
+if __name__ == "__main__":
+    arrayLength = int(input())
+    array = [int(x) for x in input().split()]
+    print(loopExists(array))
