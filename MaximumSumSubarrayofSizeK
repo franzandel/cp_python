@@ -1,0 +1,29 @@
+# My Solution
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+def findMaxSumSubArray(k, arr):
+    maximum = 0
+    if len(arr) < 3: return maximum
+
+    left, right = 0, 0
+    currentMaximum = 0
+    for i in range(k):
+        currentMaximum += arr[i]
+        right = i
+
+    maximum = currentMaximum
+
+    while left < len(arr) - k:
+        currentMaximum -= arr[left]
+        left += 1
+        right += 1
+        currentMaximum += arr[right]
+        maximum = max(maximum, currentMaximum)
+
+    return maximum
+    
+if __name__ == "__main__":
+    k = int(input())
+    arrayLength = int(input())
+    array = [int(x) for x in input().split()]
+    print(findMaxSumSubArray(k, array))
