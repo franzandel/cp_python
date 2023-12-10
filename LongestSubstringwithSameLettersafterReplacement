@@ -1,0 +1,75 @@
+# My Solution
+# Time Complexity : O(n2)
+# Space Complexity : O(n)
+# def findLength(str1, k):
+#       max_length = 0
+#       # TODO: Write your code here
+#       left, right = 0, 0
+#       usage = k
+#       hashMap = {}
+      
+#       while right < len(str1):
+#         hashMap[str1[right]] = hashMap.get(str1[right], 0) + 1
+#         while len(hashMap) > 1:
+#           if usage > 0:
+#             usage -= 1
+#             break
+#           else:
+#             # Manage k (How is the easy way?)
+#             maxValue = max(hashMap.values()) # O(n)
+#             totalValue = sum(hashMap.values()) # O(n)
+#             difference = totalValue - maxValue
+
+#             if k >= difference:
+#                break
+
+#             if str1[left] in hashMap:
+#                 hashMap[str1[left]] -= 1
+#                 if hashMap[str1[left]] == 0:
+#                     hashMap.pop(str1[left])
+
+#             left += 1
+        
+#         max_length = max(max_length, right - left + 1)
+#         right += 1
+#       return max_length
+
+# My Solution (Slighly modified from Designgurus Solution)
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+def findLength(str1, k):
+      max_length = 0
+      # TODO: Write your code here
+      left, right = 0, 0
+      usage = k
+      hashMap = {}
+      mostRepeatedCharCount = 0
+      
+      while right < len(str1):
+        hashMap[str1[right]] = hashMap.get(str1[right], 0) + 1
+        mostRepeatedCharCount = max(mostRepeatedCharCount, hashMap[str1[right]])
+        while len(hashMap) > 1:
+          if usage > 0:
+            usage -= 1
+            break
+          else:
+            difference = (right - left + 1) - mostRepeatedCharCount
+
+            if k >= difference:
+               break
+
+            if str1[left] in hashMap:
+                hashMap[str1[left]] -= 1
+                if hashMap[str1[left]] == 0:
+                    hashMap.pop(str1[left])
+
+            left += 1
+        
+        max_length = max(max_length, right - left + 1)
+        right += 1
+      return max_length
+
+if __name__ == "__main__":
+    str1 = input()
+    k = int(input())
+    print(findLength(str1, k))
