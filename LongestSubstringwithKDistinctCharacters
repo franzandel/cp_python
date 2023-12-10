@@ -1,0 +1,30 @@
+# My Solution
+# Time Complexity : O(n)
+# Space Complexity : O(K + 1)
+def findLength(str1, k):
+      max_length = 0
+      # TODO: Write your code here
+      left, right = 0, 0
+      hashMap = {}
+
+      while right < len(str1):
+        if len(hashMap) <= k:
+          hashMap[str1[right]] = hashMap.get(str1[right], 0) + 1
+
+        while len(hashMap) > k:
+          hashMap[str1[left]] = hashMap.get(str1[left], 0) - 1
+
+          if hashMap[str1[left]] == 0:
+             hashMap.pop(str1[left])
+
+          left += 1
+
+        max_length = max(max_length, right - left + 1)
+        right += 1
+
+      return max_length
+
+if __name__ == "__main__":
+    str1 = input()
+    k = int(input())
+    print(findLength(str1, k))
