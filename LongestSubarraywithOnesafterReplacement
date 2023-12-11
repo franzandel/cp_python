@@ -1,0 +1,51 @@
+# My Solution
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+# def findLength(arr, k):
+#       max_length = 0
+#       # TODO: Write your code here
+#       left, right = 0, 0
+
+#       while right < len(arr):
+#         if arr[right] == 0:
+#           if k > 0:
+#             k -= 1
+#           else:
+#             while k == 0:
+#               if arr[left] == 0:
+#                 k += 1
+#               left += 1
+            
+#             k -= 1 # for minusing current 0
+
+#         max_length = max(max_length, right - left + 1)
+#         right += 1
+        
+#       return max_length
+
+# Designgurus Solution (Written by me)
+# Time Complexity : O(n)
+# Space Complexity : O(1)
+def findLength(arr, k):
+    max_length = 0
+    left = 0
+    currentOnes = 0
+
+    for right in range(len(arr)):
+        if arr[right] == 1:
+            currentOnes += 1
+        
+        if (right - left + 1) - currentOnes > k:
+            if arr[left] == 1:
+                currentOnes -= 1
+            left += 1
+
+        max_length = max(max_length, right - left + 1)
+
+    return max_length
+
+if __name__ == "__main__":
+    k = int(input())
+    arrayLength = int(input())
+    array = [int(x) for x in input().split()]
+    print(findLength(array, k))
