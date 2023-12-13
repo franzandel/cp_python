@@ -1,0 +1,76 @@
+# My Solution
+# Time Complexity : O(n)
+# Space Complexity : O(n + m)
+# def findPermutation(str1, pattern):
+#     # TODO: Write your code here
+#     currentHashmap, givenHashmap = {}, {}
+#     left, right = 0, 0
+
+#     for i in pattern:
+#       lowercase = i.lower()
+#       givenHashmap[lowercase] = givenHashmap.get(lowercase, 0) + 1
+
+#     while right < len(str1):
+#       if givenHashmap.get(str1[right], 0) == 0:
+#         currentHashmap.clear()
+#         left += 1
+#       else:
+#         currentHashmap[str1[right]] = currentHashmap.get(str1[right], 0) + 1
+#         if currentHashmap[str1[right]] > givenHashmap[str1[right]]:
+#            currentHashmap[str1[right]] -= 1
+#            left += 1
+#         elif len(currentHashmap) == len(givenHashmap):
+#           result = currentHashmap == givenHashmap
+#           if result:
+#             return True
+
+#       right += 1
+
+#     return False
+
+# Designgurus Solution (Written by me)
+# Time Complexity : O(n + m)
+# Space Complexity : O(m)
+def findPermutation(str1, pattern):
+    givenHashmap = {}
+    left, matched = 0, 0
+
+    for i in pattern:
+        givenHashmap[i] = givenHashmap.get(i, 0) + 1
+
+    for right in range(len(str1)): 
+        if givenHashmap.get(str1[right], -1) != -1:
+            givenHashmap[str1[right]] -= 1
+            if givenHashmap[str1[right]] == 0:
+                matched += 1
+
+        if matched == len(givenHashmap):
+            return True
+        
+        # Reason we can't use windowLength checking is
+        # windowLength is not always true
+        # while right index represents there are enough characters to shrink
+        
+        # if right - left + 1 > len(pattern):
+        if right >= len(pattern) - 1:
+            current = str1[left]
+            left += 1
+            if givenHashmap.get(current, -1) != -1:
+                if givenHashmap[current] == 0:
+                    matched -= 1
+                givenHashmap[current] += 1
+
+        # while right - left + 1 > len(pattern):
+        #     if givenHashmap.get(str1[left], -1) != -1:
+        #         if givenHashmap[str1[left]] == 0:
+        #             matched -= 1
+        #         givenHashmap[str1[left]] += 1
+            
+        #     left += 1
+    
+    return False
+
+if __name__ == "__main__":
+    str1 = input()
+    pattern = input()
+    print(findPermutation(str1, pattern))
