@@ -1,0 +1,41 @@
+# My Solution
+# Time Complexity : O(m + n)
+# Space Complexity : O(m)
+def findSubstring(str1, pattern):
+    # TODO: Write your code here
+    hashmap = {}
+    isMatched = 0
+    left = 0
+    result = str1
+    everMatched = False
+
+    for i in pattern:
+      hashmap[i] = hashmap.get(i, 0) + 1
+
+    for right in range(len(str1)):
+      if str1[right] in hashmap:
+        hashmap[str1[right]] -= 1
+        if hashmap[str1[right]] == 0:
+            isMatched += 1
+          
+      while isMatched == len(hashmap):
+        everMatched = True
+        if right - left + 1 < len(result):
+          result = str1[left:right + 1]
+
+        leftChar = str1[left]
+        left += 1
+        if leftChar in hashmap:
+          hashmap[leftChar] += 1
+          if hashmap[leftChar] > 0:
+            isMatched -= 1
+
+    if not everMatched:
+      return ""
+
+    return result
+
+if __name__ == "__main__":
+    str1 = input()
+    pattern = input()
+    print(findSubstring(str1, pattern))
