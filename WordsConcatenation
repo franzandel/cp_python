@@ -1,0 +1,112 @@
+# def findWordConcatenation(str1, words):
+#     result_indices = []
+#     # TODO: Write your code here
+#     hashmap = {}
+#     matches = 0
+#     left = 0
+
+#     for i in words:
+#       hashmap[i] = hashmap.get(i, 0) + 1
+
+#     for right in range(len(words[0]), len(str1) + 1):
+#       sub = str1[right - len(words[0]): right]
+#       if sub in hashmap:
+#         if hashmap[sub] > 0:
+#           hashmap[sub] -= 1
+#           if hashmap[sub] == 0:
+#             matches += 1
+#         else:
+#           left = right
+
+#       while matches == len(hashmap):
+#         result_indices.append(left)
+#         sub = str1[left:left + len(words[0])]
+#         left += len(words[0])
+#         if sub in hashmap:
+#           hashmap[sub] += 1
+#           if hashmap[sub] > 0:
+#             matches -= 1
+
+#     return result_indices
+
+# def findWordConcatenation(str1, words):
+#     result_indices = []
+#     # TODO: Write your code here
+#     hashmap = {}
+#     matches = 0
+#     left, tempLeft = 0, 0
+
+#     for i in words:
+#       hashmap[i] = hashmap.get(i, 0) + 1
+
+#     for right in range(len(str1)):
+#       sub = str1[tempLeft:right + 1]
+#       if sub in hashmap:
+#         hashmap[sub] -= 1
+#         if hashmap[sub] == 0:
+#            matches += 1
+#         elif hashmap[sub] < 0:
+#            hashmap[sub] += 1
+#            left = tempLeft
+
+#       if matches == len(hashmap):
+#          result_indices.append(left)
+
+#          previousLeft = left
+#          while True:
+#             sub = str1[previousLeft:left + 1]
+#             if sub in hashmap:
+#                hashmap[sub] += 1
+#                matches -= 1
+#                break
+#             else:
+#                left += 1
+
+#     return result_indices
+
+# My Solution
+# Time Complexity : O(n2)
+# Space Complexity : O(m)
+def findWordConcatenation(str1, words):
+    result_indices = []
+    originalHashmap, hashmap = {}, {}
+    matches = 0
+
+    for i in words:
+        hashmap[i] = hashmap.get(i, 0) + 1
+        originalHashmap[i] = originalHashmap.get(i, 0) + 1
+
+    for i in range(len(str1) - len(words[0]) + 1):
+        sub = str1[i:i + len(words[0])]
+        if sub in hashmap:
+            hashmap[sub] -= 1
+            if hashmap[sub] == 0:
+                matches += 1
+
+            for j in range(i + len(words[0]), len(str1) - len(words[0]) + 1):
+                sub = str1[j:j + len(words[0])]
+
+                if sub in hashmap:
+                    hashmap[sub] -= 1
+                    if hashmap[sub] == 0:
+                        matches += 1
+                    elif hashmap[sub] < 0:
+                        break
+
+                    if matches == len(hashmap):
+                        break
+            
+            if matches == len(hashmap):
+               result_indices.append(i)
+            
+            matches = 0
+            for key, value in originalHashmap.items():
+                hashmap[key] = value
+   
+    return result_indices
+
+if __name__ == "__main__":
+    wordsLength = int(input())
+    words = [x for x in input().split()]
+    str1 = input()
+    print(findWordConcatenation(str1, words))
