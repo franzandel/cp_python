@@ -1,0 +1,68 @@
+# def insertIntervals(intervals, newInterval):
+#     insertIndex = -1
+#     merged = []
+#     for i in range(len(intervals)):
+#         interval = intervals[i]
+#         if interval[0] < newInterval[0]:
+#             merged.append([interval[0], interval[1]])
+#         else:
+#             insertIndex = i
+#             break
+
+#     start = intervals[insertIndex][0]
+#     end = intervals[insertIndex][1]
+#     inserted = False
+#     for i in range(insertIndex, len(intervals)):
+#         interval = intervals[i]
+#         if not inserted:
+#             if newInterval[1] <= start and newInterval[1] <= end:
+#                 inserted = True
+#                 merged.append([newInterval[0], end])
+#             else:
+#                 start = interval[0]
+#                 end = interval[1]
+#         else:
+#             merged.append([interval[0], interval[1]])
+
+#     if not inserted:
+#         merged.append([newInterval[0], end])
+
+#     return merged
+
+# Designgurus Solution
+# Time Complexity : O(n)
+# Space Complexity : O(n)
+def insertIntervals(intervals, newInterval):
+    merged = []
+    i = 0
+
+    # insert non-overlapping intervals
+    while i < len(intervals) and intervals[i][1] < newInterval[0]:
+        merged.append([intervals[i][0], intervals[i][1]])
+        i += 1
+
+    # merge overlapping intervals
+    start = newInterval[0]
+    end = newInterval[1]
+    while i < len(intervals) and newInterval[1] >= intervals[i][0]:
+        start = min(start, intervals[i][0])
+        end = max(end, intervals[i][1])
+        i += 1
+    
+    merged.append([start, end])
+
+    # insert rest intervals
+    while i < len(intervals):
+        merged.append([intervals[i][0], intervals[i][1]])
+        i += 1
+
+    return merged
+
+if __name__ == "__main__":
+    intervals = [[1,3], [5,7], [8,12]]
+    newInterval = [4,6]
+    # intervals = [[1,3], [5,7], [8,12]]
+    # newInterval = [4,10]
+    # intervals = [[2,3],[5,7]]
+    # newInterval = [1,4]
+    print(insertIntervals(intervals, newInterval))
