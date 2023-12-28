@@ -37,7 +37,7 @@
 
 #     return minRooms
 
-# Designgurus Solution (Don't understand min heap concept)
+# Designgurus Solution (Difficult to come up with last for loop)
 # Time Complexity : O(nlogn)
 # Space Complexity : O(n)
 def findMinimumMeetingRooms(meetings):
@@ -50,11 +50,14 @@ def findMinimumMeetingRooms(meetings):
     startTimes.sort()
     endTimes.sort()
 
-    endPtr = 0
+    endIndex = 0
 
     for startTime in startTimes:
-        if startTime >= endTimes[endPtr]:
-            endPtr += 1
+        # Check if current endTime greater than current start time
+        # then add room
+        # otherwise no need to add room, and navigate to next end index
+        if startTime >= endTimes[endIndex]:
+            endIndex += 1
         else:
             minRooms += 1
 
@@ -65,4 +68,5 @@ if __name__ == "__main__":
     # intervals = [[6,7], [2,4], [8,12]]
     # intervals = [[1,4], [2,3], [3,6]]
     # intervals = [[1,4], [2,5], [7,9]]
+    # intervals = [[1, 3], [2, 8], [4, 9], [5, 10], [6, 10]]
     print(findMinimumMeetingRooms(intervals))
