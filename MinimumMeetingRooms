@@ -1,0 +1,68 @@
+# My Solution
+# Time Complexity : O(n2)
+# Space Complexity : O(n)
+# def findMinimumMeetingRooms(meetings):
+#     # TODO: Write your code here
+#     if len(meetings) < 1: return 0
+#     if len(meetings) < 2: return 1
+
+#     active = []
+#     meetings.sort(key=lambda x: x[0])
+
+#     for i in range(len(meetings)):
+#         active.append([meetings[i][0], meetings[i][1]])
+#         for j in range(len(active)):
+#             if active[j][1] <= meetings[i][0]:
+#                 active.pop(j)
+#                 break
+
+#     return len(active)
+
+# My Solution (Inspired from Discussion section)
+# Time Complexity : O(n2)
+# Space Complexity : O(n)
+# def findMinimumMeetingRooms(meetings):
+#     minRooms = 0
+#     if not meetings: return minRooms
+#     meetings.sort(key=lambda x: x[0])
+#     left = 0
+
+#     for i in range(len(meetings)):
+#         minRooms += 1
+#         for j in range(left, i):
+#             if meetings[j][1] <= meetings[i][0]:
+#                 minRooms -= 1
+#                 left += 1
+#                 break
+
+#     return minRooms
+
+# Designgurus Solution (Don't understand min heap concept)
+# Time Complexity : O(nlogn)
+# Space Complexity : O(n)
+def findMinimumMeetingRooms(meetings):
+    minRooms = 0
+    if not meetings: return minRooms
+
+    startTimes = [meeting[0] for meeting in meetings]
+    endTimes = [meeting[1] for meeting in meetings]
+
+    startTimes.sort()
+    endTimes.sort()
+
+    endPtr = 0
+
+    for startTime in startTimes:
+        if startTime >= endTimes[endPtr]:
+            endPtr += 1
+        else:
+            minRooms += 1
+
+    return minRooms
+
+if __name__ == "__main__":
+    intervals = [[4,5], [2,3], [2,4], [3,5]]
+    # intervals = [[6,7], [2,4], [8,12]]
+    # intervals = [[1,4], [2,3], [3,6]]
+    # intervals = [[1,4], [2,5], [7,9]]
+    print(findMinimumMeetingRooms(intervals))
