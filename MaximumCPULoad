@@ -1,0 +1,54 @@
+# def findMaxCPULoad(jobs):
+#     max_cpu_load = 0
+#     if len(jobs) < 1: return max_cpu_load
+#     # TODO: Write your code here
+#     jobs.sort(key=lambda x: x[0])
+
+#     max_cpu_load = jobs[0][2]
+
+#     for i in range(1, len(jobs)):
+#         previousJob = jobs[i - 1]
+#         currentJob = jobs[i]
+#         overlap = previousJob[1] >= currentJob[0]
+#         # No guarantee to chain from previous call, how?
+#         if overlap:
+#             max_cpu_load += jobs[i][2]
+#         else:
+#             max_cpu_load = max(max_cpu_load, jobs[i][2])
+
+#     return max_cpu_load
+
+# My Solution
+# Time Complexity : O(nlogn)
+# Space COmplexity : O(n)
+def findMaxCPULoad(jobs):
+    max_cpu_load = 0
+    if len(jobs) < 1: return max_cpu_load
+    startWithValue = [[sublist[0], sublist[-1]] for sublist in jobs]
+    end = [sublist[1] for sublist in jobs]
+
+    startWithValue.sort(key=lambda x: x[0])
+    end.sort()
+
+    endIndex = 0
+    currentCount = 0
+
+    for i in range(len(startWithValue)):
+        startTime = startWithValue[i][0]
+        if startTime < end[endIndex]:
+            currentCount += startWithValue[i][1]
+        else:
+            currentCount = startWithValue[i][1]
+            endIndex += 1
+
+        max_cpu_load = max(max_cpu_load, currentCount)
+    
+    return max_cpu_load
+
+
+if __name__ == "__main__":
+    # jobs = [[1,4,3], [2,5,4], [7,9,6]]
+    # jobs = [[6,7,10], [2,4,11], [8,12,15]]
+    # jobs = [[1,4,2], [2,4,1], [3,6,5]]
+    jobs = [[1, 2, 10], [2, 4, 10], [3, 5, 10]]
+    print(findMaxCPULoad(jobs))
